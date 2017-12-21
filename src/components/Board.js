@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { Square } from "../components";
 
@@ -11,20 +12,12 @@ const Wrapper = styled.div`
   background-color: #f00;
 `;
 
-export class Board extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      size: props.size || 8
-    };
-  }
-
-  grid() {
+class Board extends React.Component {
+  gridView() {
     const view = [];
-    const { size } = this.state;
-    for (let row = 1; row <= size; row += 1) {
-      for (let col = 1; col <= size; col += 1) {
+    const { size } = this.props.board;
+    for (let row = 0; row < size; row += 1) {
+      for (let col = 0; col < size; col += 1) {
         view.push(
           <Square
             key={`square-${row}-${col}`}
@@ -40,6 +33,9 @@ export class Board extends React.Component {
   }
 
   render() {
-    return <Wrapper>{this.grid()}</Wrapper>;
+    return <Wrapper>{this.gridView()}</Wrapper>;
   }
 }
+
+Board = connect(({ board }) => ({ board }))(Board);
+export { Board };

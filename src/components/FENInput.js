@@ -11,7 +11,7 @@ const Input = styled.input`
   text-align: center;
   font-family: Georgia, sans-serif;
   font-size: 18px;
-  
+
   &:focus {
     outline: none;
   }
