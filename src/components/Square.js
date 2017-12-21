@@ -10,10 +10,19 @@ const Wrapper = styled.div`
 `;
 
 export class Square extends React.Component {
+  onClick = () => {
+    const { char, row, col } = this.props;
+    this.props.onClick({
+      char,
+      row,
+      col
+    });
+  };
+
   render() {
     const { size, row, col } = this.props;
     return (
-      <Wrapper size={size} row={row} col={col}>
+      <Wrapper row={row} col={col} size={size} onClick={this.onClick}>
         <Piece row={row} col={col} />
       </Wrapper>
     );
