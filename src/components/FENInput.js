@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { position2fen } from "../helpers";
+import {fen2position, position2fen} from "../helpers";
+import { setFenPosition, SIZE } from "../reducers/board";
 
 const Wrapper = styled.div``;
 
@@ -11,7 +12,7 @@ const Input = styled.input`
   border: 0;
   border-bottom: 1px solid #000;
   height: 2.6rem;
-  background-color: #fff;
+  background-color: ${p => p.filled && !p.valid ? '#ff9bac' : '#fff'};
   text-align: center;
   font-family: Georgia, sans-serif;
   font-size: 18px;
@@ -39,10 +40,26 @@ class FENInput extends React.Component {
   }
 
   isValid() {
-    return true;
+    return this.state.value.split('/').length === SIZE;
   }
 
   onChange = e => this.setState({ value: e.target.value });
+
+  onKeyUp = e => {
+    try {
+      if (e.keyCode === 13) {
+        e.preventDefault()
+        const fen = this.state.value
+        this.props.setFenPosition({
+          positions: fen2position(fen)
+        })
+
+        this.setState({ value: '' })
+      }
+    } catch (e) {
+      console.warn(e)
+    }
+  }
 
   render() {
     return (
@@ -50,8 +67,10 @@ class FENInput extends React.Component {
         <Input
           value={this.state.value}
           onChange={this.onChange}
+          onKeyUp={this.onKeyUp}
           placeholder="enter FEN code"
           valid={this.isValid()}
+          filled={this.state.value.length > 0}
         />
         <Label>{position2fen(this.props.positions)}</Label>
       </Wrapper>
@@ -59,5 +78,7 @@ class FENInput extends React.Component {
   }
 }
 
-FENInput = connect(({ board }) => ({ positions: board.positions }))(FENInput);
+FENInput = connect(({ board }) => ({ positions: board.positions }), {
+  setFenPosition
+})(FENInput);
 export { FENInput };

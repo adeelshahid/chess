@@ -8,14 +8,17 @@ const FEN_POSTFIXES = {
   QUEEN: 'q',
 }
 
+const FEN_POSTFIXES_INVERTED = {}
+Object.entries(FEN_POSTFIXES).forEach(([k, v]) => FEN_POSTFIXES_INVERTED[v] =k)
+
 
 function emptyGrid() {
   const grid = []
 
-  for (let i = 0; i < SIZE; i += 1) {
-    grid[i] = []
-    for (let j = 0; j < SIZE; j += 1) {
-      grid[i][j] = '';
+  for (let y = 0; y < SIZE; y += 1) {
+    grid[y] = []
+    for (let x = 0; x < SIZE; x += 1) {
+      grid[y][x] = '';
     }
   }
 
@@ -61,8 +64,47 @@ function fenStrFromCols(cols) {
   return squashFenCols(cols)
 }
 
+// example: r becomes WHITE_CHESS_ROOKIE,  R becomes BLACK_CHESS_ROOKIE
+function convertFenSymbolToLabel(char) {
+  let isWhite = char === char.toUpperCase()
+  const postfixLabel = FEN_POSTFIXES_INVERTED[char.toLowerCase()]
+  return `${isWhite ? 'WHITE' : 'BLACK'}_CHESS_${postfixLabel}`
+}
+
+function explodeFenStr(str) {
+  const arr = str.split('')
+  const res = []
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i]
+
+    const num = parseInt(item, 10)
+    if (Number.isInteger(num)) {
+      for (let j = 0; j < num; j++){
+        res.push('')
+      }
+    } else {
+      res.push(convertFenSymbolToLabel(item))
+    }
+  }
+
+  return res
+}
+
 export function fen2position(fen) {
-  const positions = [[]]
+  if (!fen || fen.split('/').length !== SIZE) {
+    throw 'invalid FEN code'
+  }
+
+  const grid = fen.split('/').map(strRow => explodeFenStr(strRow))
+  const positions = {}
+  for (let y = 0; y < SIZE; y += 1) {
+    for (let x = 0; x < SIZE; x += 1) {
+      if (grid[y][x]) {
+        positions[`${y},${x}`] = grid[y][x]
+      }
+    }
+  }
+
   return positions;
 }
 

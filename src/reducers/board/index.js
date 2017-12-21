@@ -1,4 +1,4 @@
-import { MOVE_PIECE } from "./actions";
+import { MOVE_PIECE, SET_FEN_POSITION } from "./actions";
 export * from "./actions";
 
 const WHITE_CHESS_KING = "\u2654"; // ♔
@@ -43,7 +43,7 @@ const initialState = {
     "0,6": "BLACK_CHESS_KNIGHT",
     "0,7": "BLACK_CHESS_ROOK",
     "1,0": "BLACK_CHESS_PAWN",
-    "4,1": "BLACK_CHESS_PAWN",
+    "1,1": "BLACK_CHESS_PAWN",
     "1,2": "BLACK_CHESS_PAWN",
     "1,3": "BLACK_CHESS_PAWN",
     "1,4": "BLACK_CHESS_PAWN",
@@ -81,6 +81,11 @@ export default function board(state = initialState, action) {
     return {
       ...state,
       positions: {...state.positions}
+    }
+  } else if (type === SET_FEN_POSITION) {
+    return {
+      ...state,
+      positions: payload.positions
     }
   }
 
