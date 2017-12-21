@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,15 +11,15 @@ const Wrapper = styled.div`
   height: 100%;
   font-size: 36px;
   line-height: 36px;
-`
+`;
 
 class Piece extends React.Component {
   render() {
-    return <Wrapper className={this.props.char}></Wrapper>;
+    return <Wrapper className={this.props.char} />;
   }
 }
 
 Piece = connect(({ board }, { row, col }) => ({
-  char: board.positions[`${row},${col}`] || ''
+  char: board.positions[`${row},${col}`] || ""
 }))(Piece);
 export { Piece };

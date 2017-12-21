@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { position2fen } from "../helpers";
+
+const Wrapper = styled.div``;
 
 const Input = styled.input`
   margin: 20px auto;
@@ -17,12 +21,16 @@ const Input = styled.input`
   }
 `;
 
+const Label = styled.div`
+  text-align: center;
+`;
+
 // Forsyth–Edwards Notation
 // https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 // Forsyth–Edwards Notation (FEN) is a standard notation for describing a particular
 // board position of a chess game. The purpose of FEN is to provide all the necessary
 // information to restart a game from a particular position.
-export class FENInput extends React.Component {
+class FENInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,12 +46,18 @@ export class FENInput extends React.Component {
 
   render() {
     return (
-      <Input
-        value={this.state.value}
-        onChange={this.onChange}
-        placeholder="enter FEN code"
-        valid={this.isValid()}
-      />
+      <Wrapper>
+        <Input
+          value={this.state.value}
+          onChange={this.onChange}
+          placeholder="enter FEN code"
+          valid={this.isValid()}
+        />
+        <Label>{position2fen(this.props.positions)}</Label>
+      </Wrapper>
     );
   }
 }
+
+FENInput = connect(({ board }) => ({ positions: board.positions }))(FENInput);
+export { FENInput };

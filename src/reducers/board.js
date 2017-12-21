@@ -26,7 +26,7 @@ export const CHARS = {
   BLACK_CHESS_PAWN,
 }
 
-const SIZE = 8
+export const SIZE = 8
 
 const initialState = {
   size: SIZE,
@@ -40,7 +40,7 @@ const initialState = {
     '0,6': 'BLACK_CHESS_KNIGHT',
     '0,7': 'BLACK_CHESS_ROOK',
     '1,0': 'BLACK_CHESS_PAWN',
-    '1,1': 'BLACK_CHESS_PAWN',
+    '4,1': 'BLACK_CHESS_PAWN',
     '1,2': 'BLACK_CHESS_PAWN',
     '1,3': 'BLACK_CHESS_PAWN',
     '1,4': 'BLACK_CHESS_PAWN',
