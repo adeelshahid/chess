@@ -28,13 +28,17 @@ class Board extends React.Component {
 
   onClick = ({ char, row, col }) => {
     const { move } = this.state;
+    if (!move.from && !char) {
+      return;
+    }
+
     const pos = `${row},${col}`;
     if (!move.from) {
       move.from = { pos, char };
       this.setState({ move });
     } else if (pos !== move.from.pos) {
       move.to = { pos, char };
-      this.props.movePiece(move)
+      this.props.movePiece(move);
       this.setState({ ...this.initialState() });
     }
   };
@@ -42,7 +46,7 @@ class Board extends React.Component {
   gridView() {
     const view = [];
     const { size, positions } = this.props.board;
-    const { move } = this.state;
+    const { move: { from } } = this.state;
 
     for (let row = 0; row < size; row += 1) {
       for (let col = 0; col < size; col += 1) {
@@ -53,7 +57,7 @@ class Board extends React.Component {
             row={row}
             col={col}
             char={positions[`${row},${col}`]}
-            isMoving={move[`${row},${col}`]}
+            isMoving={from && from.pos === `${row},${col}`}
             onClick={this.onClick}
           />
         );

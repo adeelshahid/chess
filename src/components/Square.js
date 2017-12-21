@@ -5,8 +5,17 @@ import { Piece } from "../components";
 const Wrapper = styled.div`
   width: ${p => `calc(100% / ${p.size}`});
   height: ${p => p.size ** 2}px;
-  background-color: ${p => ((p.row + p.col) % 2 === 0 ? "#ffc794" : "#cb803e")};
+  background-color: ${p => {
+    if (p.isMoving) {
+      return "#ff6100";
+    }
+
+    return (p.row + p.col) % 2 === 0 ? "#ffc794" : "#cb803e";
+  }};
   
+  &:hover {
+    background-color: #ffa247;
+  }
 `;
 
 export class Square extends React.Component {
@@ -20,9 +29,15 @@ export class Square extends React.Component {
   };
 
   render() {
-    const { size, row, col } = this.props;
+    const { size, row, col, isMoving } = this.props;
     return (
-      <Wrapper row={row} col={col} size={size} onClick={this.onClick}>
+      <Wrapper
+        size={size}
+        row={row}
+        col={col}
+        isMoving={isMoving}
+        onClick={this.onClick}
+      >
         <Piece row={row} col={col} />
       </Wrapper>
     );

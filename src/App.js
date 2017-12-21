@@ -21,6 +21,7 @@ injectGlobal`
     Object.entries(CHARS).map(([char, unicode]) => {
       return `
         .${char}:after {
+          cursor: move;  
           color: ${char.slice(0, char.indexOf('_')).toLowerCase()};
           content: "${unicode}";        
         }
