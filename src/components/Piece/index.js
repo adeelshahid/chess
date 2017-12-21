@@ -1,0 +1,12 @@
+const WHITE_CHESS_KING = '&#9812'; // ♔
+const WHITE_CHESS_QUEEN = '&#9813'; // ♕
+const WHITE_CHESS_ROOK = '&#9814'; // ♖
+const WHITE_CHESS_BISHOP = '&#9815'; // ♗
+const WHITE_CHESS_KNIGHT = '&#9816'; // ♘
+const WHITE_CHESS_PAWN = '&#9817'; // ♙
+const BLACK_CHESS_KING = '&#9818'; // ♚
+const BLACK_CHESS_QUEEN = '&#9819'; // ♛
+const BLACK_CHESS_ROOK = '&#9820'; // ♜
+const BLACK_CHESS_BISHOP = '&#9821'; // ♝
+const BLACK_CHESS_KNIGHT = '&#9822'; // ♞
+const BLACK_CHESS_PAWN = '&#9823'; // ♟
